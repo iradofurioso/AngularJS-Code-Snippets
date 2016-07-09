@@ -1,0 +1,87 @@
+<html ng-app="appContato">
+<head>
+  <title>Formulário de Contato</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+
+  <style>
+    .box-error-message {
+      width:25%;
+      background-color:#FFC0C0; 
+    }
+    .box-success-message {
+      width:25%;
+      background-color: #C0FFC0;
+    }
+  </style>
+
+
+  <script>
+    var appContato = angular.module('appContato',[]);
+
+    appContato.controller('appCtrl', function($scope) {
+      
+      // Limpar form....
+      $scope.reset = function(){ 
+        $scope.contato = {};
+        $scope.formContato.$dirty = false;
+        $scope.formContato.$pristine = true;
+        $scope.formContato.$submitted = false;
+      };
+
+    });
+  </script>
+</head>
+
+
+
+<body ng-controller="appCtrl">
+
+  <h1>Formulário de Contato</h1>
+
+  <form id="formContato" name="formContato" method="post" action="#endereco-backend-ou-envio-por-ajax">
+    <label for="fullName">Nome Completo</label>
+    <input type="text" name="fullName" ng-model="contato.fullName" ng-model-options="{debounce:250}" placeholder="Informe seu nome..." required>
+    <br>
+    <div ng-show="formContato.fullName.$invalid && !formContato.fullName.$pristine" class="box-error-message">
+      <span ng-show="formContato.fullName.$invalid">Você deve preencher o campo nome.</span><br> 
+    </div>
+    <br>
+    <br>
+    <label for="email">Endereço de E-mail</label>
+    <input type="email" name="email" ng-model="contato.email" ng-model-options="{debounce:250}" placeholder="email@email.com.br" required>
+    <div ng-show="formContato.email.$invalid && !formContato.email.$pristine || formContato.email.$error.email" class="box-error-message">
+      <span ng-show="formContato.email.$invalid">Você deve preencher o campo E-mail.</span><br>
+      <span ng-show="formContato.email.$error.email"> Favor informar um endereço de E-mail válido.</span>
+    </div>
+    <br>
+    <br>
+    <label for="fone">Telefone</label>
+    <input type="text" name="fone" ng-model="contato.fone" ng-model-options="{debounce:250}" placeholder="Telefone com DDD" required>
+    <div ng-show="formContato.fone.$invalid && !formContato.fone.$pristine" class="box-error-message">
+      <span ng-show="formContato.fone.$invalid">Favor informe o telefone.</span><br>    
+    </div>
+    <br>
+    <br>
+    <label for="msg">Mensagem</label>
+    <textarea name="msg" ng-model="contato.msg" ng-model-options="{debounce:250}" placeholder="Mensagem" pattern=".{2,}" required></textarea>
+    <div ng-show="formContato.msg.$invalid && !formContato.msg.$pristine" class="box-error-message">
+      Favor informe a mensagem!
+    </div>           
+    <br>
+    <br>
+    <button type="submit" name="submit" ng-disabled="formContato.$invalid">Enviar</button>
+    <button type="reset" ng-click="reset()">Limpar</button>
+    <br>
+    <br>
+    <!-- Mensagem geral -->
+    <div class="box-error-message" ng-show="formContato.$invalid">
+      Certifique-se de que todos os campos estão preenchidos.
+    </div>
+    <div class="box-success-message" ng-show="formContato.$valid">
+      Agora você pode enviar o formulário.
+    </div>
+  </form>
+
+</body>
+</html>
