@@ -1,0 +1,39 @@
+<html ng-app="meuApp">
+<head>
+	<title>Filtrando Conteúdo do Array</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+
+	<script>
+		angular.module('meuApp', []);
+	</script>
+
+</head>
+
+<body ng-init="clientes=[{nome:'Carlos'},{nome:'Maria'},{nome:'Adão'},{nome:'Bianca'},{nome:'Zuleika'}];produtos=[{nomeProduto:'PenDrive Kingstom',cidadeProcedencia:'Ciudad del est',preco:15},{nomeProduto:'TV 40 polegadas',cidadeProcedencia:'Manaus',preco:1750}];">
+
+	<h3>Utilização Simples do Filtro</h3>
+
+	<ul>
+		<li ng-repeat="cliente in clientes | orderBy:'nome'">
+			{{cliente.nome | uppercase}}
+		</li>
+	</ul>
+
+	<br>
+	<br>
+
+	<h3>Filtragem Dinâmica</h3>
+
+	<input type="text" ng-model="procuraProduto">
+	<br>
+	<ul>
+		<li ng-repeat="produto in produtos | filter:procuraProduto | orderBy:'nomeProduto'">
+			{{produto.nomeProduto | uppercase}} - {{produto.cidadeProcedencia | lowercase}} - {{produto.preco | currency}}
+		</li>
+	</ul>
+
+
+
+</body>
+</html>
